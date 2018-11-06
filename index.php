@@ -20,6 +20,8 @@ function div($x, $y){
     return $x / $y;
 }
 
+
+/**
 if (!isset($_GET['op']) || !isset($_GET['x']) || !isset($_GET['y'])) {
     echo "<h1> Incorrect or incomplete data </h1>";
     exit();
@@ -53,7 +55,7 @@ switch ($_GET['op']){
         echo "<h1> Unrecognized operation: $op</h1>";
 }
 
-/**echo sum(5, 7);
+echo sum(5, 7);
 echo ("\n");
 echo sub(10, 1);
 echo ("\n");
