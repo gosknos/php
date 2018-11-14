@@ -1,76 +1,45 @@
+<html>
+<head>
+    <title> My friends book</title>
+</head>
+<body>
+<form action="index.php" method="post">
+    Name: <input type="text" name="name">
+    <input type="submit" value="Add new friend">
+    <input type="text" name="nameFilter" value="<?php if(empty($_POST['nameFilter'])) $nameFilter = NULL;?>">
+    <input type="submit" name="filter" value="Filter list">
+</form>
 <?php
-include "Calculator.php";
-$names = array("Patrick", "John", "Marie", "Claire", "Paul");
-foreach ($names as $name) {
-    if (strlen($name)>=2 && $name[0]=='P' && $name[1]=='a'){
-        print "$name, ";
-    }
-}
+include('header.html');
 
-function sum($x, $y) {
-    return $x + $y;
-}
-function sub($x, $y){
-    return $x - $y;
-}
-function multi($x, $y){
-    return $x * $y;
-}
-function div($x, $y){
-    return $x / $y;
-}
+echo "<h1>My best friends: </h1>";
 
+$filename = 'friends.txt';
+if (isset($_POST['name'])) { $name = $_POST['name']; }
+if (isset($_POST['nameFilter'])) { $name = $_POST['nameFilter']; }
+$file = fopen( $filename, "r" );
+$file2 = fopen( $filename, "r" );
 
-/**
-if (!isset($_GET['op']) || !isset($_GET['x']) || !isset($_GET['y'])) {
-    echo "<h1> Incorrect or incomplete data </h1>";
-    exit();
-}
-
-$x=$_GET['x'];
-$y=$_GET['y'];
-
-switch ($_GET['op']){
-    case 'sum':
-        $result = $x+$y;
-        echo "<h1> $x+$y = $result </h1>";
-        break;
-    case 'sub':
-        $result = $x-$y;
-        echo "<h1> $x -$y = $result </h1>";
-        break;
-    case 'div':
-        if($y==0) {echo "<h1> cannot divide by 0 ! </h1>";}
-        else {
-            $result = $x/$y;
-            echo "<h1> $x/$y = $result </h1>";
+while (!feof($file)) {
+    if ($nameFilter != NULL){
+        if (strstr(fgets($file), "$nameFilter", false) != NULL){
+            $ligne = fgets($file2)."<br/>";
+            echo $ligne;
         }
-        break;
-    case 'multi':
-        $result = $x*$y;
-        echo "<h1> $x*$y = $result </h1>";
-        break;
-    default:
-        $op=$_GET['op'];
-        echo "<h1> Unrecognized operation: $op</h1>";
+        else {
+            fgets($file2);
+        }
+    }
+    else { echo fgets($file)."<br/>";}
 }
 
-echo sum(5, 7);
-echo ("\n");
-echo sub(10, 1);
-echo ("\n");
-echo multi (2,4);
-echo ("\n");
-echo div (10,5); */
-
-
-$calculator = new Calculator();
-echo $calculator->sum(5, 7);
-echo ("\n");
-echo $calculator->sub(8, 2);
-echo ("\n");
-echo $calculator->multi(2, 5);
-echo ("\n");
-echo $calculator->div(20, 4);
-
+// appending to file
+$file = fopen( $filename, "a+" );
+if ($file != false)
+{
+    echo "<b>$name</b>";
+    fwrite($file,"$name");
+    fclose($file);
+}
+include('footer.html');
 ?>
