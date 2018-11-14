@@ -15,8 +15,8 @@ include('header.html');
 echo "<h1>My best friends: </h1>";
 
 $filename = 'friends.txt';
-if (isset($_POST['name'])) { $name = $_POST['name']; }
-if (isset($_POST['nameFilter'])) { $name = $_POST['nameFilter']; }
+$name = $_POST['name'];
+$nameFilter = $_POST['nameFilter'];
 $file = fopen( $filename, "r" );
 $file2 = fopen( $filename, "r" );
 
@@ -38,7 +38,7 @@ $file = fopen( $filename, "a+" );
 if ($file != false)
 {
     echo "<b>$name</b>";
-    fwrite($file,"$name");
+    fwrite($file,"$name\n");
     fclose($file);
 }
 include('footer.html');
