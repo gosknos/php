@@ -1,3 +1,7 @@
+<?php
+include('header.html');
+echo "<h1>My best friends: </h1>";
+?>
 <html>
 <head>
     <title> My friends book</title>
@@ -10,10 +14,6 @@
     <input type="submit" name="filter" value="Filter list">
 </form>
 <?php
-include('header.html');
-
-echo "<h1>My best friends: </h1>";
-
 $filename = 'friends.txt';
 $name = $_POST['name'];
 $nameFilter = $_POST['nameFilter'];
@@ -32,7 +32,8 @@ while (!feof($file)) {
         }
     }
     else {
-        echo fgets($file)."<br/>";
+        $friend = fgets($file);
+        echo "<li>$friend </li>";
     }
 }
 
